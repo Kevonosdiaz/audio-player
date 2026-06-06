@@ -2,7 +2,6 @@
 #include <QDebug>
 #include <mpd/client.h>
 #include <iostream>
-#include <memory>
 
 #include <QApplication>
 
