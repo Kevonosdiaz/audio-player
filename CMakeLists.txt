@@ -3,6 +3,7 @@ project(audio-player LANGUAGES CXX)
 
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)
 find_package(PkgConfig REQUIRED)
+find_package(TagLib 2.0.0 REQUIRED)
 pkg_check_modules(MPDCLIENT REQUIRED libmpdclient)
 
 qt_standard_project_setup()
@@ -20,6 +21,7 @@ target_link_libraries(audio-player
         Qt::Core
         Qt::Widgets
         ${MPDCLIENT_LIBRARIES}
+        TagLib::tag
 )
 
 target_include_directories(audio-player
