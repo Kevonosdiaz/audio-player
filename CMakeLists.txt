@@ -14,6 +14,8 @@ qt_add_executable(audio-player
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    mpdhandler.h mpdhandler.cpp
+
 )
 
 target_link_libraries(audio-player

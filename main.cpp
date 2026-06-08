@@ -1,15 +1,30 @@
 #include "mainwindow.h"
-#include <QDebug>
-#include <mpd/client.h>
-#include <iostream>
-
+#include "mpdhandler.h"
 #include <QApplication>
+#include <QDebug>
+#include <QObject>
+#include <mpd/client.h>
+
+#include <iostream>
+#include <memory>
 
 int main(int argc, char* argv[])
 {
     QApplication a(argc, argv);
     MainWindow   w;
     w.show();
+
+    // Setup second thread and run MPD related tasks on it
+    QThread*    mpd_thread  = new QThread();
+    MpdHandler* mpd_handler = new MpdHandler();
+    mpd_handler->moveToThread(mpd_thread);
+
+    // Delete worker after thread is finished
+    QObject::connect(mpd_thread, &QThread::finished, mpd_handler, &QObject::deleteLater);
+
+    // Setup connections so worker can be told what to do
+
+    mpd_thread->start();
 
     // Try simple MPD connection to test basic functionality
     struct mpd_connection* conn = mpd_connection_new(NULL, 0, 0);
