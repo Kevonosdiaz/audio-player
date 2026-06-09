@@ -1,36 +1,38 @@
 #ifndef MPDHANDLER_H
 #define MPDHANDLER_H
 
-// Handle MPD interaction and related tasks
-// Should be moved to another thread to avoid blocking main event loop
-
 #include <QDebug>
 #include <QObject>
 #include <QThread>
+#include <iostream>
+#include <mpd/client.h>
+
+// Handle MPD interaction and related tasks
+// Should be moved to another thread to avoid blocking main event loop
 
 class MpdHandler : public QObject
 {
     Q_OBJECT
 public:
     explicit MpdHandler(QObject* parent = nullptr);
+    ~MpdHandler();
 
 public slots:
-    void toggle_playback();
-    void next_song();
-    void prev_song();
+    void handle_toggle_playback();
+    void handle_next_song();
+    void handle_prev_song();
     // TODO: Communicate to main thread to display large album art
     // , as well as small album art in song list(s)
     // TODO: Figure out how to communicate MPD/song info to GUI
 signals:
-    // Signals to GUI:
     // void display_large_art();
-    void s_song_changed();
-    void s_volume_changed();
+    void song_changed();
+    void volume_changed();
+    void error_occurred(QString msg);
+    void warning_occurred(QString msg);
 
-    // Signals to MpdWorker:
-    void s_toggle_playback();
-    void s_next_song();
-    void s_prev_song();
+private:
+    struct mpd_connection* conn;
 };
 
 #endif // MPDHANDLER_H
