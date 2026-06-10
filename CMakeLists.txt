@@ -8,14 +8,26 @@ pkg_check_modules(MPDCLIENT REQUIRED libmpdclient)
 
 qt_standard_project_setup()
 
+set(SOURCES
+    src/main.cpp
+    src/mainwindow.cpp
+    src/mpdhandler.cpp
+)
+
+set(HEADERS
+    src/mainwindow.h
+    src/mpdhandler.h
+)
+
+set(UI
+    src/mainwindow.ui
+)
+
 qt_add_executable(audio-player
     WIN32 MACOSX_BUNDLE
-    main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
-    mpdhandler.h mpdhandler.cpp
-
+    ${SOURCES}
+    ${HEADERS}
+    ${UI}
 )
 
 target_link_libraries(audio-player
