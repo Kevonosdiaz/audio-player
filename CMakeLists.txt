@@ -12,11 +12,13 @@ set(SOURCES
     src/main.cpp
     src/mainwindow.cpp
     src/mpdhandler.cpp
+    src/tagart.cpp
 )
 
 set(HEADERS
     src/mainwindow.h
     src/mpdhandler.h
+    src/tagart.h
 )
 
 set(UI
