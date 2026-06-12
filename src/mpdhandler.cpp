@@ -1,5 +1,7 @@
 #include "mpdhandler.h"
 #include "tagart.h"
+#include <QByteArray>
+#include <QPixmap>
 #include <iostream>
 #include <mpd/client.h>
 
@@ -27,9 +29,42 @@ MpdHandler::~MpdHandler()
     mpd_connection_free(conn);
 }
 
+// Fetches current song and get it's embedded album art
+// TODO: Check for memory leaks/errors, and use macros & error checks
 QPixmap MpdHandler::get_current_art()
 {
-    // mpd_run_readpicture(conn);
+    struct mpd_song* curr_song = mpd_run_current_song(conn);
+    if(!curr_song)
+        return QPixmap();
+    std::string curr_song_uri = mpd_song_get_uri(curr_song);
+
+    int                        offset = 0;
+    unsigned char              pic_chunk[BINARY_CHUNK_SIZE];
+    std::vector<unsigned char> pic_buffer;
+    // Read in chunks at a time into pic_chunk, then append to pic_buffer
+    while(true)
+    {
+        int read_bytes = mpd_run_readpicture(
+            conn, curr_song_uri.c_str(), offset, pic_chunk, BINARY_CHUNK_SIZE);
+        if(read_bytes <= 0)
+        {
+            break;
+        }
+        pic_buffer.insert(pic_buffer.end(), pic_chunk, pic_chunk + read_bytes);
+        offset += read_bytes;
+    }
+
+    if(pic_buffer.empty())
+    {
+        mpd_song_free(curr_song);
+        return QPixmap();
+    }
+
+    QPixmap res;
+    res.loadFromData(pic_buffer.data(), pic_buffer.size());
+
+    mpd_song_free(curr_song);
+    return res;
 }
 
 SongInfo MpdHandler::get_current_songinfo() { }
@@ -52,6 +87,8 @@ void MpdHandler::handle_next_song()
     {
         std::cerr << "Failed to go to next song" << std::endl;
     }
+    QPixmap art = get_current_art();
+    emit art_changed(art);
 }
 
 void MpdHandler::handle_prev_song()

@@ -16,12 +16,14 @@ int main(int argc, char* argv[])
     // Delete worker after thread is finished
     QObject::connect(&mpd_thread, &QThread::finished, &mpd_handler, &QObject::deleteLater);
 
-    // Setup connections so worker can be told what to do
 
     mpd_thread.start();
 
     MainWindow w(&mpd_handler);
     w.show();
+
+    QObject::connect(
+        &mpd_handler, &MpdHandler::art_changed, &w, &MainWindow::handle_main_art_changed);
 
     return QApplication::exec();
 }

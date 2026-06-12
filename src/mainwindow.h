@@ -21,7 +21,7 @@ public:
     explicit MainWindow(MpdHandler* mpd_handler, QWidget* parent = nullptr);
     ~MainWindow() override;
 
-private slots:
+public slots:
     void handle_playback_toggled();
     void handle_song_changed(const SongInfo& song_info);
     void handle_main_art_changed(const QPixmap& art);

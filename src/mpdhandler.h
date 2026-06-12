@@ -36,10 +36,13 @@ signals:
 
 private:
     struct mpd_connection* conn;
-    QPixmap                get_current_art();
-    SongInfo               get_current_songinfo();
-    QString                get_mpd_dir();
-    QString                get_current_song_path();
+    // Default size for libmpdclient to use for buffers,
+    // changable with binarylimit command
+    size_t   BINARY_CHUNK_SIZE = 8192;
+    QPixmap  get_current_art();
+    SongInfo get_current_songinfo();
+    QString  get_mpd_dir();
+    QString  get_current_song_path();
 };
 
 #endif // MPDHANDLER_H
