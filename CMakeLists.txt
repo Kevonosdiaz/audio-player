@@ -30,6 +30,7 @@ qt_add_executable(audio-player
     ${SOURCES}
     ${HEADERS}
     ${UI}
+    src/songinfo.h
 )
 
 target_link_libraries(audio-player

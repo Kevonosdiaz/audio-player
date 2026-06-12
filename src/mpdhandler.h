@@ -1,10 +1,12 @@
 #ifndef MPDHANDLER_H
 #define MPDHANDLER_H
 
+#include "songinfo.h"
 #include <QDebug>
 #include <QObject>
+#include <QPixmap>
+#include <QString>
 #include <QThread>
-#include <iostream>
 #include <mpd/client.h>
 
 // Handle MPD interaction and related tasks
@@ -26,13 +28,18 @@ public slots:
     // TODO: Figure out how to communicate MPD/song info to GUI
 signals:
     // void display_large_art();
-    void song_changed();
+    void song_changed(SongInfo& song_info);
     void volume_changed();
     void error_occurred(QString msg);
     void warning_occurred(QString msg);
+    void art_changed(QPixmap);
 
 private:
     struct mpd_connection* conn;
+    QPixmap                get_current_art();
+    SongInfo               get_current_songinfo();
+    QString                get_mpd_dir();
+    QString                get_current_song_path();
 };
 
 #endif // MPDHANDLER_H

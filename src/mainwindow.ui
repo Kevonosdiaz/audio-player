@@ -23,14 +23,22 @@
          <enum>Qt::Orientation::Horizontal</enum>
         </property>
         <widget class="QTabWidget" name="LeftPane">
-         <widget class="QWidget" name="tab">
+         <property name="currentIndex">
+          <number>2</number>
+         </property>
+         <widget class="QWidget" name="QueueTab">
           <attribute name="title">
-           <string>Tab 1</string>
+           <string>Queue</string>
           </attribute>
          </widget>
-         <widget class="QWidget" name="tab_2">
+         <widget class="QWidget" name="FileTab">
           <attribute name="title">
-           <string>Tab 2</string>
+           <string>Files</string>
+          </attribute>
+         </widget>
+         <widget class="QWidget" name="PlaylistTab">
+          <attribute name="title">
+           <string>Playlist</string>
           </attribute>
          </widget>
         </widget>
@@ -48,7 +56,17 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="RightPane" native="true"/>
+        <widget class="QWidget" name="RightPane" native="true">
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QLabel" name="MainAlbumArt">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </widget>
       </item>
       <item>

@@ -1,15 +1,12 @@
 #include "mpdhandler.h"
+#include "tagart.h"
+#include <iostream>
+#include <mpd/client.h>
 
-/**
- * @brief MpdHandler::MpdHandler
- * @param parent
- */
-
+// TODO: Figure out error handling
 MpdHandler::MpdHandler(QObject* parent)
     : QObject{parent}
 {
-    std::cout << "In MpdHandler ctor!\n";
-    // Try simple MPD connection to test basic functionality
     conn = mpd_connection_new(NULL, 0, 0);
 
     // Error handling
@@ -28,8 +25,18 @@ MpdHandler::MpdHandler(QObject* parent)
 MpdHandler::~MpdHandler()
 {
     mpd_connection_free(conn);
-    std::cout << "Freed mpd connection\n";
 }
+
+QPixmap MpdHandler::get_current_art()
+{
+    // mpd_run_readpicture(conn);
+}
+
+SongInfo MpdHandler::get_current_songinfo() { }
+
+QString MpdHandler::get_mpd_dir() { }
+
+QString MpdHandler::get_current_song_path() { }
 
 void MpdHandler::handle_toggle_playback()
 {
