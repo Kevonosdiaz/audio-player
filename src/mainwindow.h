@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "mpdhandler.h"
+#include "scalingpixmaplabel.h"
 #include "songinfo.h"
 #include <QLabel>
 #include <QMainWindow>
@@ -28,7 +29,7 @@ public slots:
 
 private:
     Ui::MainWindow* ui;
-    QLabel*         main_album_art_display;
+    ScalingPixmapLabel* main_album_art_display;
     MpdHandler*     mpd_handler;
 };
 #endif // MAINWINDOW_H

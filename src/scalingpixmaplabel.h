@@ -19,7 +19,7 @@ public:
 
 public slots:
     void set_pixmap(const QPixmap& pix);
-    void resize_event(QResizeEvent* event);
+    void resizeEvent(QResizeEvent* event);
 
 private:
     QPixmap current_pixmap;

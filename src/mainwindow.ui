@@ -59,7 +59,7 @@
         <widget class="QWidget" name="RightPane" native="true">
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
-           <widget class="QLabel" name="MainAlbumArt">
+           <widget class="ScalingPixmapLabel" name="MainAlbumArt">
             <property name="text">
              <string/>
             </property>
@@ -277,6 +277,13 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ScalingPixmapLabel</class>
+   <extends>QLabel</extends>
+   <header>scalingpixmaplabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

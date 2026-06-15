@@ -36,5 +36,5 @@ void MainWindow::handle_main_art_changed(const QPixmap& art)
 {
     if(art.isNull())
         return;
-    main_album_art_display->setPixmap(art);
+    main_album_art_display->set_pixmap(art);
 }
