@@ -44,6 +44,7 @@ target_link_libraries(audio-player
 
 target_include_directories(audio-player
     PRIVATE ${MPDCLIENT_INCLUDE_DIRS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
 install(TARGETS audio-player
