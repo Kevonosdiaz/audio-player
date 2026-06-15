@@ -1,5 +1,4 @@
 #include "mpdhandler.h"
-#include "tagart.h"
 #include <QByteArray>
 #include <QPixmap>
 #include <iostream>
