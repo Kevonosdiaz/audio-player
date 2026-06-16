@@ -1,7 +1,7 @@
 #ifndef MPDHANDLER_H
 #define MPDHANDLER_H
 
-#include "songinfo.h"
+#include "mpdutil.h"
 #include <QDebug>
 #include <QObject>
 #include <QPixmap>
@@ -18,6 +18,7 @@ class MpdHandler : public QObject
 public:
     explicit MpdHandler(QObject* parent = nullptr);
     ~MpdHandler();
+    void initialize_state();
 
 public slots:
     void handle_toggle_playback();

@@ -24,6 +24,10 @@ MpdHandler::~MpdHandler()
     mpd_connection_free(conn);
 }
 
+// Fetch MPD status, existing song playing, queue, etc.
+// and emit corresponding signals to main
+void MpdHandler::initialize_state() { }
+
 // Fetches current song and get it's embedded album art
 // TODO: Check for memory leaks/errors, and use macros & error checks
 QPixmap MpdHandler::get_current_art()

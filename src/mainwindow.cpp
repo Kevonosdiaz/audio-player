@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "songinfo.h"
+#include "mpdutil.h"
 #include "ui_mainwindow.h"
 #include <QLabel>
 

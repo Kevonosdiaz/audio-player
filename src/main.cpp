@@ -25,5 +25,7 @@ int main(int argc, char* argv[])
     QObject::connect(
         &mpd_handler, &MpdHandler::art_changed, &w, &MainWindow::handle_main_art_changed);
 
+    mpd_handler.initialize_state();
+
     return QApplication::exec();
 }

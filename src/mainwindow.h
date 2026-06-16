@@ -3,7 +3,6 @@
 
 #include "mpdhandler.h"
 #include "scalingpixmaplabel.h"
-#include "songinfo.h"
 #include <QLabel>
 #include <QMainWindow>
 
