@@ -1,5 +1,5 @@
 #include "mpdhandler.h"
-#include "util.h"
+#include "mpdutil.h"
 #include <QByteArray>
 #include <QDebug>
 #include <QPixmap>

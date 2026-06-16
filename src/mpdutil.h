@@ -1,7 +1,9 @@
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef MPDUTIL_H
+#define MPDUTIL_H
 
 #include <QDebug>
+#include <QPixmap>
+#include <QString>
 #include <mpd/client.h>
 
 // This is expected to be run after a libmpdclient call
@@ -23,4 +25,12 @@
         }                                                             \
     } while(0)
 
-#endif // UTIL_H
+struct SongInfo
+{
+    // QPixmap img;
+    QString title;
+    QString artist;
+    QString album;
+    int     duration;
+};
+#endif // MPDUTIL_H

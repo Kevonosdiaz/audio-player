@@ -27,9 +27,9 @@ qt_add_executable(audio-player
     ${SOURCES}
     ${HEADERS}
     ${UI}
-    src/songinfo.h
+
     src/scalingpixmaplabel.h src/scalingpixmaplabel.cpp
-    src/util.h
+    src/mpdutil.h
 )
 
 target_link_libraries(audio-player
