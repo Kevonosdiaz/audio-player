@@ -100,4 +100,6 @@ void MpdHandler::handle_prev_song()
         qDebug() << "Failed to go to prev song";
     }
     MPD_CHECK(conn);
+    QPixmap art = get_current_art();
+    emit art_changed(art);
 }
