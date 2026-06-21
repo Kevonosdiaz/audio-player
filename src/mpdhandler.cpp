@@ -8,7 +8,7 @@
 MpdHandler::MpdHandler(QObject* parent)
     : QObject{parent}
 {
-    conn = mpd_connection_new(NULL, 0, 0);
+    conn.reset(mpd_connection_new(NULL, 0, 0));
 
     // Error handling
     if(conn == nullptr)
@@ -19,11 +19,6 @@ MpdHandler::MpdHandler(QObject* parent)
     MPD_CHECK(conn);
 }
 
-MpdHandler::~MpdHandler()
-{
-    mpd_connection_free(conn);
-}
-
 // Fetch MPD status, existing song playing, queue, etc.
 // and emit corresponding signals to main
 void MpdHandler::initialize_state() { }
@@ -32,7 +27,7 @@ void MpdHandler::initialize_state() { }
 // TODO: Check for memory leaks/errors, and use macros & error checks
 QPixmap MpdHandler::get_current_art()
 {
-    struct mpd_song* curr_song = mpd_run_current_song(conn);
+    struct mpd_song* curr_song = mpd_run_current_song(conn.get());
     MPD_CHECK(conn);
     if(!curr_song)
         return QPixmap();
@@ -46,7 +41,7 @@ QPixmap MpdHandler::get_current_art()
     while(true)
     {
         int read_bytes = mpd_run_readpicture(
-            conn, curr_song_uri.c_str(), offset, pic_chunk, BINARY_CHUNK_SIZE);
+            conn.get(), curr_song_uri.c_str(), offset, pic_chunk, BINARY_CHUNK_SIZE);
         MPD_CHECK(conn);
         if(read_bytes <= 0)
         {
@@ -77,9 +72,17 @@ QString MpdHandler::get_mpd_dir() { }
 
 QString MpdHandler::get_current_song_path() { }
 
+// Read current mpd_status and tell main thread to update based on status
+void MpdHandler::parse_status()
+{
+    mpd_status* status = mpd_run_status(conn.get());
+
+    mpd_status_free(status);
+}
+
 void MpdHandler::handle_toggle_playback()
 {
-    if(!mpd_run_toggle_pause(conn))
+    if(!mpd_run_toggle_pause(conn.get()))
     {
         qDebug() << "Failed to toggle playback";
     }
@@ -88,7 +91,7 @@ void MpdHandler::handle_toggle_playback()
 
 void MpdHandler::handle_next_song()
 {
-    if(!mpd_run_next(conn))
+    if(!mpd_run_next(conn.get()))
     {
         qDebug() << "Failed to go to next song";
     }
@@ -99,7 +102,7 @@ void MpdHandler::handle_next_song()
 
 void MpdHandler::handle_prev_song()
 {
-    if(!mpd_run_previous(conn))
+    if(!mpd_run_previous(conn.get()))
     {
         qDebug() << "Failed to go to prev song";
     }
