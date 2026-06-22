@@ -78,14 +78,135 @@
          </size>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,5,1">
+         <property name="spacing">
+          <number>6</number>
+         </property>
          <property name="leftMargin">
-          <number>20</number>
+          <number>6</number>
+         </property>
+         <property name="topMargin">
+          <number>6</number>
          </property>
          <property name="rightMargin">
-          <number>20</number>
+          <number>6</number>
+         </property>
+         <property name="bottomMargin">
+          <number>6</number>
          </property>
          <item>
-          <layout class="QVBoxLayout" name="PBSectionL"/>
+          <layout class="QVBoxLayout" name="PBSectionL">
+           <item>
+            <layout class="QHBoxLayout" name="MpdStatus">
+             <item>
+              <widget class="QPushButton" name="RepeatButton">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../assets/repeat.svg</normaloff>../assets/repeat.svg</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="RandomButton">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../assets/shuffle.svg</normaloff>../assets/shuffle.svg</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="ConsumeButton">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../assets/consume.svg</normaloff>../assets/consume.svg</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="SingleButton">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../assets/single.svg</normaloff>../assets/single.svg</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_3"/>
+           </item>
+          </layout>
          </item>
          <item>
           <layout class="QVBoxLayout" name="PBSectionC">
@@ -125,8 +246,8 @@
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>32</width>
-                   <height>32</height>
+                   <width>128</width>
+                   <height>128</height>
                   </size>
                  </property>
                  <property name="text">
@@ -134,12 +255,6 @@
                  </property>
                  <property name="icon">
                   <iconset theme="QIcon::ThemeIcon::MediaSkipBackward"/>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
                  </property>
                 </widget>
                </item>
@@ -157,23 +272,11 @@
                    <height>32</height>
                   </size>
                  </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>32</width>
-                   <height>32</height>
-                  </size>
-                 </property>
                  <property name="text">
                   <string/>
                  </property>
                  <property name="icon">
                   <iconset theme="QIcon::ThemeIcon::MediaPlaybackStart"/>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
                  </property>
                 </widget>
                </item>
@@ -191,23 +294,11 @@
                    <height>32</height>
                   </size>
                  </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>32</width>
-                   <height>32</height>
-                  </size>
-                 </property>
                  <property name="text">
                   <string/>
                  </property>
                  <property name="icon">
                   <iconset theme="QIcon::ThemeIcon::MediaSkipForward"/>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
                  </property>
                 </widget>
                </item>
@@ -253,7 +344,7 @@
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
