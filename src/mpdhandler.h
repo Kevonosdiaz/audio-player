@@ -35,8 +35,6 @@ public slots:
     void handle_toggle_playback();
     void handle_next_song();
     void handle_prev_song();
-    // TODO: Communicate to main thread to display large album art
-    // , as well as small album art in song list(s)
     // TODO: Figure out how to communicate MPD/song info to GUI
 signals:
     void song_changed(SongInfo& song_info);

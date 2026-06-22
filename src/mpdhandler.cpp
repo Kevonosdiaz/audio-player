@@ -77,6 +77,33 @@ void MpdHandler::parse_status()
 {
     mpd_status* status = mpd_run_status(conn.get());
 
+    emit repeat_mode_changed(mpd_status_get_repeat(status));
+    MPD_CHECK(conn);
+    emit random_mode_changed(mpd_status_get_random(status));
+    MPD_CHECK(conn);
+    emit single_mode_changed(mpd_status_get_single_state(status));
+    MPD_CHECK(conn);
+    emit consume_mode_changed(mpd_status_get_consume_state(status));
+    MPD_CHECK(conn);
+    mpd_state state = mpd_state_changed(mpd_status_get_state(status));
+    // Depending on state, pass on more details to GUI (e.g. song details)
+    switch(state)
+    {
+    case MPD_STATE_STOP:
+        break;
+    case MPD_STATE_PAUSE:
+        // Change logo here and fallthrough to PLAY state
+    case MPD_STATE_PLAY:
+        QPixmap art = get_current_art();
+        emit    art_changed(art);
+        break;
+    default:
+        // Unknown state
+        qDebug() << "Retrieved unknown state from mpd_state_changed()";
+    }
+
+    MPD_CHECK(conn);
+
     mpd_status_free(status);
 }
 
@@ -97,7 +124,7 @@ void MpdHandler::handle_next_song()
     }
     MPD_CHECK(conn);
     QPixmap art = get_current_art();
-    emit art_changed(art);
+    emit    art_changed(art);
 }
 
 void MpdHandler::handle_prev_song()
@@ -108,5 +135,5 @@ void MpdHandler::handle_prev_song()
     }
     MPD_CHECK(conn);
     QPixmap art = get_current_art();
-    emit art_changed(art);
+    emit    art_changed(art);
 }
