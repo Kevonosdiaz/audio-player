@@ -38,3 +38,13 @@ void MainWindow::handle_main_art_changed(const QPixmap& art)
         return;
     main_album_art_display->set_pixmap(art);
 }
+
+void MainWindow::handle_volume_changed(int volume) { }
+
+void MainWindow::handle_repeat_mode_changed(bool repeat_on) { }
+
+void MainWindow::handle_random_mode_changed(bool random_on) { }
+
+void MainWindow::handle_single_mode_changed(mpd_single_state state) { }
+
+void MainWindow::handle_consume_mode_changed(mpd_consume_state state) { }

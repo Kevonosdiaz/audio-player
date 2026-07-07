@@ -85,7 +85,7 @@ void MpdHandler::parse_status()
     MPD_CHECK(conn);
     emit consume_mode_changed(mpd_status_get_consume_state(status));
     MPD_CHECK(conn);
-    mpd_state state = mpd_state_changed(mpd_status_get_state(status));
+    mpd_state state = mpd_status_get_state(status);
     // Depending on state, pass on more details to GUI (e.g. song details)
     switch(state)
     {
@@ -97,9 +97,6 @@ void MpdHandler::parse_status()
         QPixmap art = get_current_art();
         emit    art_changed(art);
         break;
-    default:
-        // Unknown state
-        qDebug() << "Retrieved unknown state from mpd_state_changed()";
     }
 
     MPD_CHECK(conn);
