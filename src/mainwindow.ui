@@ -320,7 +320,7 @@
             </layout>
            </item>
            <item>
-            <widget class="QSlider" name="VolumeSlider">
+            <widget class="QSlider" name="PlaybackSlider">
              <property name="orientation">
               <enum>Qt::Orientation::Horizontal</enum>
              </property>
@@ -329,7 +329,22 @@
           </layout>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="PBSectionR"/>
+          <layout class="QVBoxLayout" name="PBSectionR">
+           <item>
+            <widget class="QLabel" name="VolumeLabel">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="VolumeSlider">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </widget>
@@ -344,7 +359,7 @@
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

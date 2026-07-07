@@ -29,7 +29,7 @@ class MpdHandler : public QObject
     Q_OBJECT
 public:
     explicit MpdHandler(QObject* parent = nullptr);
-    void initialize_state();
+    void parse_status();
 
 public slots:
     void handle_toggle_playback();
@@ -56,14 +56,17 @@ signals:
 private:
     mpd_conn conn;
     int      current_volume = 0;
+    bool              repeat_state   = false;
+    bool              random_state   = false;
+    mpd_single_state  single_state;
+    mpd_consume_state consume_state;
     // Default size for libmpdclient to use for buffers,
     // changable with binarylimit command
     size_t   BINARY_CHUNK_SIZE = 8192;
     QPixmap  get_current_art();
-    SongInfo get_current_songinfo();
-    QString  get_mpd_dir();
-    QString  get_current_song_path();
-    void     parse_status();
+    // SongInfo get_current_songinfo();
+    // QString  get_mpd_dir();
+    // QString  get_current_song_path();
 };
 
 #endif // MPDHANDLER_H

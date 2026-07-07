@@ -27,8 +27,6 @@ MainWindow::MainWindow(MpdHandler* mpd_handler, QWidget* parent)
 
     // Connect album art display
     main_album_art_display = ui->MainAlbumArt;
-
-    // Initialize current MPD song info if existing song, queue, etc.?
 }
 
 MainWindow::~MainWindow()

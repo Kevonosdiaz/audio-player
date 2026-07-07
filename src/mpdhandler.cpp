@@ -3,6 +3,7 @@
 #include <QByteArray>
 #include <QDebug>
 #include <QPixmap>
+#include <iostream>
 #include <mpd/client.h>
 
 MpdHandler::MpdHandler(QObject* parent)
@@ -18,10 +19,6 @@ MpdHandler::MpdHandler(QObject* parent)
 
     MPD_CHECK(conn);
 }
-
-// Fetch MPD status, existing song playing, queue, etc.
-// and emit corresponding signals to main
-void MpdHandler::initialize_state() { }
 
 // Fetches current song and get it's embedded album art
 // TODO: Check for memory leaks/errors, and use macros & error checks
@@ -66,11 +63,11 @@ QPixmap MpdHandler::get_current_art()
     return res;
 }
 
-SongInfo MpdHandler::get_current_songinfo() { }
+// SongInfo MpdHandler::get_current_songinfo() { }
 
-QString MpdHandler::get_mpd_dir() { }
+// QString MpdHandler::get_mpd_dir() { }
 
-QString MpdHandler::get_current_song_path() { }
+// QString MpdHandler::get_current_song_path() { }
 
 // Read current mpd_status and tell main thread to update based on status
 void MpdHandler::parse_status()
@@ -78,16 +75,25 @@ void MpdHandler::parse_status()
     mpd_status* status = mpd_run_status(conn.get());
 
     current_volume = mpd_run_get_volume(conn.get());
+    MPD_CHECK(conn);
     emit volume_changed(current_volume);
+
+    repeat_state = mpd_status_get_repeat(status);
     MPD_CHECK(conn);
-    emit repeat_mode_changed(mpd_status_get_repeat(status));
+    emit repeat_mode_changed(repeat_state);
+
+    random_state = mpd_status_get_random(status);
     MPD_CHECK(conn);
-    emit random_mode_changed(mpd_status_get_random(status));
+    emit random_mode_changed(random_state);
+
+    single_state = mpd_status_get_single_state(status);
     MPD_CHECK(conn);
-    emit single_mode_changed(mpd_status_get_single_state(status));
+    emit single_mode_changed(single_state);
+
+    consume_state = mpd_status_get_consume_state(status);
     MPD_CHECK(conn);
-    emit consume_mode_changed(mpd_status_get_consume_state(status));
-    MPD_CHECK(conn);
+    emit consume_mode_changed(consume_state);
+
     mpd_state state = mpd_status_get_state(status);
     // Depending on state, pass on more details to GUI (e.g. song details)
     switch(state)
@@ -142,19 +148,81 @@ void MpdHandler::handle_prev_song()
 void MpdHandler::handle_volume(int volume)
 {
     int  relative_diff = volume - current_volume;
+    if(relative_diff == 0)
+        return;
     bool res           = mpd_run_change_volume(conn.get(), relative_diff);
     // Do we need both checks?
     if(!res)
-        emit error_occurred("Error while changing MPD volume");
+        emit error_occurred("Failed to execute mpd_run_change_volume");
     MPD_CHECK(conn);
     current_volume = volume;
     emit volume_changed(current_volume);
 }
 
-void MpdHandler::handle_repeat() { }
+void MpdHandler::handle_repeat()
+{
+    mpd_run_repeat(conn.get(), !repeat_state);
+    MPD_CHECK(conn);
+    repeat_state = !repeat_state;
+    emit repeat_mode_changed(repeat_state);
+}
 
-void MpdHandler::handle_random() { }
+void MpdHandler::handle_random()
+{
+    mpd_run_random(conn.get(), !random_state);
+    MPD_CHECK(conn);
+    random_state = !random_state;
+    emit random_mode_changed(random_state);
+}
 
-void MpdHandler::handle_single() { }
+void MpdHandler::handle_single()
+{
+    mpd_single_state next_state;
+    switch(single_state)
+    {
+    case MPD_SINGLE_OFF:
+        next_state = MPD_SINGLE_ONESHOT;
+        break;
+    case MPD_SINGLE_ONESHOT:
+        next_state = MPD_SINGLE_ON;
+        break;
+    case MPD_SINGLE_ON:
+        next_state = MPD_SINGLE_OFF;
+        break;
+    case MPD_SINGLE_UNKNOWN:
+        qDebug() << "MPD_SINGLE_UNKNOWN when checking state";
+    }
 
-void MpdHandler::handle_consume() { }
+    bool res = mpd_run_single_state(conn.get(), next_state);
+    if(!res)
+        emit error_occurred("Failed to execute mpd_run_single_state");
+    MPD_CHECK(conn);
+    single_state = next_state;
+    emit single_mode_changed(single_state);
+}
+
+void MpdHandler::handle_consume()
+{
+    mpd_consume_state next_state;
+    switch(consume_state)
+    {
+    case MPD_CONSUME_OFF:
+        next_state = MPD_CONSUME_ONESHOT;
+        break;
+    case MPD_CONSUME_ONESHOT:
+        next_state = MPD_CONSUME_ON;
+        break;
+    case MPD_CONSUME_ON:
+        next_state = MPD_CONSUME_OFF;
+        break;
+    case MPD_CONSUME_UNKNOWN:
+        qDebug() << "MPD_CONSUME_UNKNOWN when checking state";
+    }
+
+    bool res = mpd_run_consume_state(conn.get(), next_state);
+    if(!res)
+        emit error_occurred("Failed to execute mpd_run_consume_state");
+    MPD_CHECK(conn);
+    consume_state = next_state;
+    emit consume_mode_changed(consume_state);
+}
