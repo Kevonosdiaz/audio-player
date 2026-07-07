@@ -35,6 +35,11 @@ public slots:
     void handle_toggle_playback();
     void handle_next_song();
     void handle_prev_song();
+    void handle_volume(int volume);
+    void handle_repeat();
+    void handle_random();
+    void handle_single();
+    void handle_consume();
     // TODO: Figure out how to communicate MPD/song info to GUI
 signals:
     void song_changed(SongInfo& song_info);
@@ -50,6 +55,7 @@ signals:
 
 private:
     mpd_conn conn;
+    int      current_volume = 0;
     // Default size for libmpdclient to use for buffers,
     // changable with binarylimit command
     size_t   BINARY_CHUNK_SIZE = 8192;

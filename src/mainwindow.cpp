@@ -9,6 +9,9 @@ MainWindow::MainWindow(MpdHandler* mpd_handler, QWidget* parent)
     , mpd_handler(mpd_handler)
 {
     ui->setupUi(this);
+    ui->VolumeSlider->setMinimum(0);
+    ui->VolumeSlider->setMaximum(100);
+
     // Setup media playback buttons
     connect(ui->PlaybackButton,
             &QPushButton::clicked,
@@ -16,6 +19,11 @@ MainWindow::MainWindow(MpdHandler* mpd_handler, QWidget* parent)
             &MpdHandler::handle_toggle_playback);
     connect(ui->NextButton, &QPushButton::clicked, mpd_handler, &MpdHandler::handle_next_song);
     connect(ui->PrevButton, &QPushButton::clicked, mpd_handler, &MpdHandler::handle_prev_song);
+    connect(ui->VolumeSlider, &QSlider::valueChanged, mpd_handler, &MpdHandler::handle_volume);
+    connect(ui->RepeatButton, &QPushButton::clicked, mpd_handler, &MpdHandler::handle_repeat);
+    connect(ui->RandomButton, &QPushButton::clicked, mpd_handler, &MpdHandler::handle_random);
+    connect(ui->SingleButton, &QPushButton::clicked, mpd_handler, &MpdHandler::handle_single);
+    connect(ui->ConsumeButton, &QPushButton::clicked, mpd_handler, &MpdHandler::handle_consume);
 
     // Connect album art display
     main_album_art_display = ui->MainAlbumArt;
@@ -39,7 +47,10 @@ void MainWindow::handle_main_art_changed(const QPixmap& art)
     main_album_art_display->set_pixmap(art);
 }
 
-void MainWindow::handle_volume_changed(int volume) { }
+void MainWindow::handle_volume_changed(int volume)
+{
+    ui->VolumeSlider->setValue(volume);
+}
 
 void MainWindow::handle_repeat_mode_changed(bool repeat_on) { }
 

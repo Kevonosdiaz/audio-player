@@ -77,6 +77,9 @@ void MpdHandler::parse_status()
 {
     mpd_status* status = mpd_run_status(conn.get());
 
+    current_volume = mpd_run_get_volume(conn.get());
+    emit volume_changed(current_volume);
+    MPD_CHECK(conn);
     emit repeat_mode_changed(mpd_status_get_repeat(status));
     MPD_CHECK(conn);
     emit random_mode_changed(mpd_status_get_random(status));
@@ -94,9 +97,10 @@ void MpdHandler::parse_status()
     case MPD_STATE_PAUSE:
         // Change logo here and fallthrough to PLAY state
     case MPD_STATE_PLAY:
-        QPixmap art = get_current_art();
-        emit    art_changed(art);
+        emit art_changed(get_current_art());
         break;
+    case MPD_STATE_UNKNOWN:
+        qDebug() << "MPD_STATE_UNKNOWN when checking state";
     }
 
     MPD_CHECK(conn);
@@ -134,3 +138,23 @@ void MpdHandler::handle_prev_song()
     QPixmap art = get_current_art();
     emit    art_changed(art);
 }
+
+void MpdHandler::handle_volume(int volume)
+{
+    int  relative_diff = volume - current_volume;
+    bool res           = mpd_run_change_volume(conn.get(), relative_diff);
+    // Do we need both checks?
+    if(!res)
+        emit error_occurred("Error while changing MPD volume");
+    MPD_CHECK(conn);
+    current_volume = volume;
+    emit volume_changed(current_volume);
+}
+
+void MpdHandler::handle_repeat() { }
+
+void MpdHandler::handle_random() { }
+
+void MpdHandler::handle_single() { }
+
+void MpdHandler::handle_consume() { }
