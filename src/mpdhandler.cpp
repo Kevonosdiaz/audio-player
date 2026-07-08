@@ -63,7 +63,24 @@ QPixmap MpdHandler::get_current_art()
     return res;
 }
 
-// SongInfo MpdHandler::get_current_songinfo() { }
+// TODO: Use tags to fetch other fields like album, name, etc.
+SongInfo MpdHandler::get_current_songinfo()
+{
+    struct mpd_song* curr_song = mpd_run_current_song(conn.get());
+    MPD_CHECK(conn);
+    int current_duration = mpd_song_get_duration(curr_song);
+    MPD_CHECK(conn);
+    // TODO: Remove redundant usage of mpd_run_current_song in get_current_art
+    QPixmap art = get_current_art();
+
+    struct SongInfo res;
+    res.img      = art;
+    res.duration = current_duration;
+
+    mpd_song_free(curr_song);
+
+    return res;
+}
 
 // QString MpdHandler::get_mpd_dir() { }
 

@@ -55,7 +55,8 @@ signals:
 
 private:
     mpd_conn conn;
-    int      current_volume = 0;
+    SongInfo          current_song;
+    int               current_volume = 0;
     bool              repeat_state   = false;
     bool              random_state   = false;
     mpd_single_state  single_state;
@@ -64,7 +65,7 @@ private:
     // changable with binarylimit command
     size_t   BINARY_CHUNK_SIZE = 8192;
     QPixmap  get_current_art();
-    // SongInfo get_current_songinfo();
+    SongInfo get_current_songinfo();
     // QString  get_mpd_dir();
     // QString  get_current_song_path();
 };
