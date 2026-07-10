@@ -120,7 +120,9 @@ void MpdHandler::parse_status()
     case MPD_STATE_PAUSE:
         // Change logo here and fallthrough to PLAY state
     case MPD_STATE_PLAY:
-        emit art_changed(get_current_art());
+        current_song = get_current_songinfo();
+        emit art_changed(current_song.img);
+        emit song_changed(current_song.duration);
         break;
     case MPD_STATE_UNKNOWN:
         qDebug() << "MPD_STATE_UNKNOWN when checking state";
@@ -147,8 +149,9 @@ void MpdHandler::handle_next_song()
         qDebug() << "Failed to go to next song";
     }
     MPD_CHECK(conn);
-    QPixmap art = get_current_art();
-    emit    art_changed(art);
+    current_song = get_current_songinfo();
+    emit art_changed(current_song.img);
+    emit song_changed(current_song.duration);
 }
 
 void MpdHandler::handle_prev_song()
@@ -158,8 +161,9 @@ void MpdHandler::handle_prev_song()
         qDebug() << "Failed to go to prev song";
     }
     MPD_CHECK(conn);
-    QPixmap art = get_current_art();
-    emit    art_changed(art);
+    current_song = get_current_songinfo();
+    emit art_changed(current_song.img);
+    emit song_changed(current_song.duration);
 }
 
 void MpdHandler::handle_volume(int volume)
@@ -174,6 +178,16 @@ void MpdHandler::handle_volume(int volume)
     MPD_CHECK(conn);
     current_volume = volume;
     emit volume_changed(current_volume);
+}
+
+void MpdHandler::handle_playback_seeking(int seconds)
+{
+    // Note: false flag denotes seeking to absolute time stamp
+    bool res = mpd_run_seek_current(conn.get(), seconds, false);
+    if(!res)
+        emit error_occurred("Failed to execute mpd_run_seek_current");
+    MPD_CHECK(conn);
+    emit playback_progress_changed(seconds);
 }
 
 void MpdHandler::handle_repeat()

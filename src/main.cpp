@@ -27,6 +27,8 @@ int main(int argc, char* argv[])
         &mpd_handler, &MpdHandler::art_changed, &w, &MainWindow::handle_main_art_changed);
     QObject::connect(
         &mpd_handler, &MpdHandler::volume_changed, &w, &MainWindow::handle_volume_changed);
+    QObject::connect(
+        &mpd_handler, &MpdHandler::song_changed, &w, &MainWindow::handle_song_changed);
     QObject::connect(&mpd_handler,
                      &MpdHandler::repeat_mode_changed,
                      &w,

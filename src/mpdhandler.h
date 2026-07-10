@@ -36,18 +36,21 @@ public slots:
     void handle_next_song();
     void handle_prev_song();
     void handle_volume(int volume);
+    void handle_playback_seeking(int seconds);
     void handle_repeat();
     void handle_random();
     void handle_single();
     void handle_consume();
     // TODO: Figure out how to communicate MPD/song info to GUI
 signals:
-    void song_changed(SongInfo& song_info);
+    // May want to fuse song/art_changed together
+    void song_changed(int duration);
+    void art_changed(QPixmap art);
     void error_occurred(QString msg);
     void warning_occurred(QString msg);
-    void art_changed(QPixmap art);
     void mpd_state_changed(mpd_state state);
     void volume_changed(int volume);
+    void playback_progress_changed(int seconds);
     void repeat_mode_changed(bool repeat_on);
     void random_mode_changed(bool random_on);
     void single_mode_changed(mpd_single_state state);
