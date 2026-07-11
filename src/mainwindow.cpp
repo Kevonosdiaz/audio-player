@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QLabel>
+#include "mpdutil.h"
 #include <iostream>
 
 MainWindow::MainWindow(MpdHandler* mpd_handler, QWidget* parent)
@@ -40,8 +41,8 @@ MainWindow::~MainWindow()
 void MainWindow::handle_playback_toggled() { }
 
 void MainWindow::handle_song_changed(int duration) {
-    std::cout << "Just set a maximum of " << duration << " seconds for PlaybackSlider" << std::endl;
     ui->PlaybackSlider->setMaximum(duration);
+    ui->DurationLabel->setText(format_seconds_time(duration));
 }
 
 void MainWindow::handle_main_art_changed(const QPixmap& art)
@@ -59,6 +60,8 @@ void MainWindow::handle_volume_changed(int volume)
 void MainWindow::handle_playback_seeking_changed(int seconds)
 {
     ui->PlaybackSlider->setValue(seconds);
+    std::cout << "seconds: " << seconds << std::endl;
+    ui->SongProgressLabel->setText(format_seconds_time(seconds));
 }
 
 void MainWindow::handle_repeat_mode_changed(bool repeat_on) { }

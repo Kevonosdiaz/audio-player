@@ -34,4 +34,11 @@ struct SongInfo
     int     duration;
 };
 
+inline QString format_seconds_time(int seconds)
+{
+    int mins = seconds / 60;
+    int secs = seconds % 60;
+    return QString("%1:%2").arg(mins).arg(secs);
+}
+
 #endif // MPDUTIL_H
