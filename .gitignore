@@ -1,3 +1,9 @@
+compile_commands.json
+.qt/
+CMakeFiles/
+cmake_install.cmake
+CMakeCache.txt
+
 # This file is used to ignore files which are generated
 # ----------------------------------------------------------------------------
 
