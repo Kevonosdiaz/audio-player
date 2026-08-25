@@ -13,7 +13,6 @@ MainWindow::MainWindow(MpdHandler* mpd_handler, QWidget* parent)
     ui->VolumeSlider->setMinimum(0);
     ui->VolumeSlider->setMaximum(100);
     ui->PlaybackSlider->setMinimum(0);
-    // Allow maximum to be set for each individual song's duration (sec)
 
     // Setup media playback buttons
     connect(ui->PlaybackButton,
@@ -41,6 +40,7 @@ MainWindow::~MainWindow()
 void MainWindow::handle_playback_toggled() { }
 
 void MainWindow::handle_song_changed(int duration) {
+    // Allow maximum to be set for each individual song's duration (sec)
     ui->PlaybackSlider->setMaximum(duration);
     ui->DurationLabel->setText(format_seconds_time(duration));
 }

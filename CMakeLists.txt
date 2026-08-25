@@ -6,16 +6,20 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(MPDCLIENT REQUIRED libmpdclient)
 
 qt_standard_project_setup()
+set(CMAKE_AUTORCC ON)
 
 set(SOURCES
     src/main.cpp
     src/mainwindow.cpp
     src/mpdhandler.cpp
+    src/scalingpixmaplabel.cpp
 )
 
 set(HEADERS
     src/mainwindow.h
     src/mpdhandler.h
+    src/mpdutil.h
+    src/scalingpixmaplabel.h
 )
 
 set(UI
@@ -27,9 +31,7 @@ qt_add_executable(audio-player
     ${SOURCES}
     ${HEADERS}
     ${UI}
-
-    src/scalingpixmaplabel.h src/scalingpixmaplabel.cpp
-    src/mpdutil.h
+    assets.qrc
 )
 
 target_link_libraries(audio-player

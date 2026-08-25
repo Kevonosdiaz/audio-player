@@ -115,8 +115,8 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>../assets/repeat.svg</normaloff>../assets/repeat.svg</iconset>
+                <iconset resource="../assets.qrc">
+                 <normaloff>:/assets/repeat.svg</normaloff>:/assets/repeat.svg</iconset>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -147,8 +147,8 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>../assets/shuffle.svg</normaloff>../assets/shuffle.svg</iconset>
+                <iconset resource="../assets.qrc">
+                 <normaloff>:/assets/shuffle.svg</normaloff>:/assets/shuffle.svg</iconset>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -179,8 +179,8 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>../assets/consume.svg</normaloff>../assets/consume.svg</iconset>
+                <iconset resource="../assets.qrc">
+                 <normaloff>:/assets/consume.svg</normaloff>:/assets/consume.svg</iconset>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -208,8 +208,8 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>../assets/single.svg</normaloff>../assets/single.svg</iconset>
+                <iconset resource="../assets.qrc">
+                 <normaloff>:/assets/single.svg</normaloff>:/assets/single.svg</iconset>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -399,6 +399,8 @@
    <header>scalingpixmaplabel.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../assets.qrc"/>
+ </resources>
  <connections/>
 </ui>

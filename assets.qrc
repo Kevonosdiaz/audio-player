@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>assets/single.svg</file>
+        <file>assets/consume.svg</file>
+        <file>assets/repeat.svg</file>
+        <file>assets/shuffle.svg</file>
+    </qresource>
+</RCC>

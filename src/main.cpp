@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "mpdhandler.h"
 #include <QApplication>
-#include <QDebug>
 #include <QObject>
 
 int main(int argc, char* argv[])
