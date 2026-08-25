@@ -3,7 +3,6 @@
 #include <QByteArray>
 #include <QDebug>
 #include <QPixmap>
-#include <iostream>
 #include <mpd/client.h>
 
 MpdHandler::MpdHandler(QObject* parent)
@@ -22,7 +21,7 @@ MpdHandler::MpdHandler(QObject* parent)
 
 // Fetches current song and get it's embedded album art
 // TODO: Check for memory leaks/errors, and use macros & error checks
-QPixmap MpdHandler::get_current_art()
+QPixmap MpdHandler::get_current_art() const
 {
     struct mpd_song* curr_song = mpd_run_current_song(conn.get());
     MPD_CHECK(conn);
@@ -64,7 +63,7 @@ QPixmap MpdHandler::get_current_art()
 }
 
 // TODO: Use tags to fetch other fields like album, name, etc.
-SongInfo MpdHandler::get_current_songinfo()
+SongInfo MpdHandler::get_current_songinfo() const
 {
     struct mpd_song* curr_song = mpd_run_current_song(conn.get());
     MPD_CHECK(conn);
